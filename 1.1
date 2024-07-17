@@ -1,0 +1,151 @@
+import sys
+from PyQt5.QtWidgets import QApplication, QLineEdit, QPushButton, QWidget
+
+class Calculator(QWidget):
+    def __init__(self):
+        super().__init__()
+
+        self.setWindowTitle("Calculator 1.0")
+        self.setGeometry(570, 220, 320, 380)
+        self.create_widgets()
+
+        
+
+    def create_widgets(self):
+        self.entry = QLineEdit(self)
+        self.entry.setGeometry(30, 20, 270, 35)
+        self.entry.setStyleSheet("font-size: 20px; font-family: roboto")
+
+        self.one_btn = QPushButton(self, text="1")
+        self.one_btn.setGeometry(30, 80, 60, 55)
+        self.one_btn.clicked.connect(self.on_button_click)
+
+        self.two_btn = QPushButton(self, text="2")
+        self.two_btn.setGeometry(100, 80, 60, 55)
+        self.two_btn.clicked.connect(self.on_button_click)
+
+        self.three_btn = QPushButton(self, text="3")
+        self.three_btn.setGeometry(170, 80, 60, 55)
+        self.three_btn.clicked.connect(self.on_button_click)
+
+        self.plus_btn = QPushButton(self, text="+")
+        self.plus_btn.setGeometry(240, 80, 60, 55)
+        self.plus_btn.clicked.connect(self.on_button_click)
+        self.plus_btn.setStyleSheet("""
+            QPushButton {
+            background-color: #99ff99; 
+            border: none
+            }         
+            QPushButton:hover {
+            background-color: #66ff66; 
+            }   
+            """)
+
+        self.four_btn = QPushButton(self, text="4")
+        self.four_btn.setGeometry(30, 150, 60, 55)
+        self.four_btn.clicked.connect(self.on_button_click)
+
+        self.five_btn = QPushButton(self, text="5")
+        self.five_btn.setGeometry(100, 150, 60, 55)
+        self.five_btn.clicked.connect(self.on_button_click)
+
+        self.six_btn = QPushButton(self, text="6")
+        self.six_btn.setGeometry(170, 150, 60, 55)
+        self.six_btn.clicked.connect(self.on_button_click)
+
+        self.negative_btn = QPushButton(self, text="-")
+        self.negative_btn.setGeometry(240, 150, 60, 55)
+        self.negative_btn.clicked.connect(self.on_button_click)
+        self.negative_btn.setStyleSheet("""
+            QPushButton {
+            background-color: #99ff99; 
+            border: none
+            }         
+            QPushButton:hover {
+            background-color: #66ff66; 
+            }   
+            """)
+
+        self.seven_btn = QPushButton(self, text="7")
+        self.seven_btn.setGeometry(30, 220, 60, 55)
+        self.seven_btn.clicked.connect(self.on_button_click)
+
+        self.eight_btn = QPushButton(self, text="8")
+        self.eight_btn.setGeometry(100, 220, 60, 55)
+        self.eight_btn.clicked.connect(self.on_button_click)
+
+        self.nine_btn = QPushButton(self, text="9")
+        self.nine_btn.setGeometry(170, 220, 60, 55)
+        self.nine_btn.clicked.connect(self.on_button_click)
+
+        self.multiplication_btn = QPushButton(self, text="*")
+        self.multiplication_btn.setGeometry(240, 220, 60, 55)
+        self.multiplication_btn.clicked.connect(self.on_button_click)
+        self.multiplication_btn.setStyleSheet("""
+            QPushButton {
+            background-color: #99ff99; 
+            border: none
+            }         
+            QPushButton:hover {
+            background-color: #66ff66; 
+            }   
+            """)
+
+        self.zero_btn = QPushButton(self, text="0")
+        self.zero_btn.setGeometry(30, 290, 60, 55)
+        self.zero_btn.clicked.connect(self.on_button_click)
+
+        self.point_btn = QPushButton(self, text=".")
+        self.point_btn.setGeometry(100, 290, 60, 55)
+        self.point_btn.clicked.connect(self.on_button_click)
+
+        self.equal_btn = QPushButton(self, text="=")
+        self.equal_btn.setGeometry(240, 290, 60, 55)
+        self.equal_btn.clicked.connect(self.equal)
+        self.equal_btn.setStyleSheet("""
+            QPushButton {
+            background-color: #ff9999; 
+            border: none
+            }         
+            QPushButton:hover {
+            background-color: #ff6666; 
+            }   
+            """)
+
+        self.divide_btn = QPushButton(self, text="/")
+        self.divide_btn.setGeometry(170, 290, 60, 55)
+        self.divide_btn.clicked.connect(self.on_button_click)
+        self.divide_btn.setStyleSheet("""
+            QPushButton {
+            background-color: #99ff99; 
+            border: none
+            }         
+            QPushButton:hover {
+            background-color: #66ff66; 
+            }   
+            """)
+
+    def on_button_click(self):
+        button = self.sender()
+        text = button.text()
+
+        if text == '=':
+            self.equal()
+        else:
+            # Mevcut metne butonun metnini ekle
+            current_text = self.entry.text()
+            new_text = current_text + text
+            self.entry.setText(new_text)
+
+    def equal(self):
+        try:
+            result = str(eval(self.entry.text()))
+            self.entry.setText(result)
+        except Exception:
+            self.entry.setText("Hata")
+
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    calculator = Calculator()
+    calculator.show()
+    sys.exit(app.exec_())
